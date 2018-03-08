@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+
+.baocun{
+	float:left;
+	margin-top:32px;
+
+}
+.baocun button{
+	background-color:#62ab00;
+	border-radius:4px;
+	border-style:none;
+	color:#fff;
+	cursor:pointer;
+	font-size:14px;
+	height:38px;
+	outline:0;
+	width:110px;
+
+}
+.baocun button:hover{
+	background-color:#4a8200;
+}
+.simpleiduce{
+	border-top: 1px solid;
+	border-left: 1px solid;
+	border-bottom: 1px solid;
+	border-color: grey;
+	width:500px;
+	height:30px;
+	line-height:30px;
+	float: left;
+	font-weight: bold;
+	font-size: 14px;
+
+}
+.status{
+	border-top: 1px solid;
+
+	border-bottom: 1px solid;
+	border-color: grey;
+	width:150px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	font-weight: bold;
+	font-size: 14px;
+
+}
+.operate{
+	border-top: 1px solid;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+	border-color: grey;
+	width:240px;
+	height:30px;
+	line-height:30px;
+	
+	font-weight: bold;
+	font-size: 14px;
+}
+.housebody{
+	width:500px;
+	height:100px;
+	/* padding:20px; */
+	float:left;
+}
+.title{
+	width:500px;
+	font-size: 20px;
+	font-weight: bold;
+	
+}
+.village{
+	width:500px;
+	font-size: 14px;
+	color: gray;
+	
+}
+.loc{
+	width:500px;
+	font-size: 14px;
+	color: gray;
+}
+.statu{
+	width: 150px;
+	height:100px;
+	float:left;
+	line-height: 100px;
+	
+}
+.op{
+	width: 100px;
+	height:100px;
+	
+	line-height: 100px;
+	
+}
