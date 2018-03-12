@@ -112,7 +112,7 @@ public class User implements java.io.Serializable {
 		this.nickname = nickname;
 	}
 
-	@Column(name = "headicon", length = 45)
+	@Column(name = "headicon", length = 100)
 	public String getHeadicon() {
 		return this.headicon;
 	}

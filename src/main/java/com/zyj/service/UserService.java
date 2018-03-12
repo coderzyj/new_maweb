@@ -40,4 +40,7 @@ public interface UserService {
 	
 	
 	public void update(User user);
+	
+	
+	public User get(int id);
 }

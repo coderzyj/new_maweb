@@ -3,6 +3,7 @@ package com.zyj.service;
 import java.util.List;
 
 import com.zyj.entity.House;
+import com.zyj.entity.Request;
 import com.zyj.vo.SearchConditionVo;
 
 public interface HouseService {
@@ -12,4 +13,5 @@ public interface HouseService {
 	public List<House>  getHouseByPage(String loc,int start,int end);
 	public List<House> 	getHouseByKey(String key);
 	public List<House> getHouseByCondition(SearchConditionVo condition);
+	public List<Request> getReqList(int id);
 }

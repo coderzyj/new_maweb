@@ -46,7 +46,7 @@ public class Request implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "house")
 	public House getHouse() {
 		return this.house;
@@ -56,7 +56,7 @@ public class Request implements java.io.Serializable {
 		this.house = house;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user")
 	public User getUser() {
 		return this.user;

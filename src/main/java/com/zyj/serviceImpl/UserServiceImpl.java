@@ -90,4 +90,12 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		commonDao.update(user);
 	}
+
+	@Override
+	public User get(int id) {
+		// TODO Auto-generated method stub
+		return (User) commonDao.getById(User.class, id);
+	}
+	
+	
 }

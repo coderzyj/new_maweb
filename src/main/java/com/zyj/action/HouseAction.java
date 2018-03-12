@@ -1,5 +1,6 @@
 package com.zyj.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.zyj.common.Constant;
 import com.zyj.common.Util;
 import com.zyj.entity.House;
+import com.zyj.entity.Request;
 import com.zyj.entity.User;
 import com.zyj.service.HouseService;
 import com.zyj.vo.SearchConditionVo;
@@ -100,6 +102,7 @@ public class HouseAction extends ActionSupport{
 	}
 	@Action(value="showmyhouse")
 	public String showMyHouse()throws Exception{
+		System.out.println("进来了");
 		HttpServletRequest request= ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		User user=(User) request.getSession().getAttribute("user");
@@ -109,10 +112,13 @@ public class HouseAction extends ActionSupport{
 		return null;
 	}
 	
-	/*@Action(value="requesthouse",results={
-			@Result(name="requesthouse",location="")
-	})
-	public String requestHouse(){
-		return "requesthouse";
-	}*/
+	@Action(value="requesthouse")
+	public String getReqList() throws IOException{
+		HttpServletRequest request= ServletActionContext.getRequest();
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int id=Integer.parseInt(request.getParameter("id"));
+		List<Request> list=houseService.getReqList(id);
+		Util.returnJson(response, list);
+		return null;
+	}
 }

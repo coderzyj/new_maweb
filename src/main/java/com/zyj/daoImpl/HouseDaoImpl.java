@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.zyj.dao.HouseDao;
 import com.zyj.entity.House;
+import com.zyj.entity.Request;
 import com.zyj.vo.SearchConditionVo;
 /**
  * 
@@ -156,5 +157,13 @@ public class HouseDaoImpl implements HouseDao{
 
 		}
 		return hql;
+	}
+
+	@Override
+	public List<Request> getReqList(int id) {
+		// TODO Auto-generated method stub
+		String hql="from Request r where r.house.id=?";
+		
+		return (List<Request>)getSession().createQuery(hql).setParameter(0, id).list();
 	}
 }

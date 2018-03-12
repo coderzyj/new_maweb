@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.zyj.dao.HouseDao;
 import com.zyj.entity.House;
+import com.zyj.entity.Request;
 import com.zyj.service.HouseService;
 import com.zyj.vo.SearchConditionVo;
 /**
@@ -62,6 +63,12 @@ public class HouseServiceImpl implements HouseService{
 	public List<House> getHouseByCondition(SearchConditionVo condition) {
 		// TODO Auto-generated method stub
 		return houseDao.getHouseByCondition(condition);
+	}
+
+	@Override
+	public List<Request> getReqList(int id) {
+		// TODO Auto-generated method stub
+		return houseDao.getReqList(id);
 	}
 
 }

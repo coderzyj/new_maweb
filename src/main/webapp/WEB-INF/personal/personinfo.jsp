@@ -13,6 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" rev="stylesheet" href="${pageContext.request.contextPath}/css/info.css" type="text/css">
 <link rel="stylesheet" rev="stylesheet" href="${pageContext.request.contextPath}/css/layui.css" type="text/css">
 <script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%=path %>/js/upload.js"></script>
 <title>用户中心－个人资料</title>
 <style type="text/css">
 
@@ -23,6 +24,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		
 		})
+		function requestList(id){
+		$.ajax({
+			url:'<%=path %>/house/requesthouse',
+			data:{'id':id},
+			type:'GET',
+			dataType:'json',
+			timeout:60000,
+			success:function(data){
+				var list="<div class='user'><center>用户基本信息</center></div><div class='act'><center>操作</center></div><div style='height:20px'></div>";
+				for(var i=0;i<data.length;i++){
+					list=list+"<div class='infobody'><div class='name'>"+data[i].user.username+"</div><div class='phone'>"+data[i].user.phone+"</div>\
+					<div class='email'></div></div><div class='acts'><center><button class='layui-btn'>同意</button></center></div>"
+				}
+				
+				$('.profile').html(list);
+			},
+			error:function(){
+    			}
+			
+		
+		
+		
+		});}
 	function myPublic(){
 		$.ajax({
 			url:'<%=path %>/house/showmyhouse',
@@ -41,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				//tab=tab+"</table>";
 				for(var i=0;i<data.length;i++){
 				tab=tab+"<div class='housebody'><div>时间："+data[i].publicdate+"</div><div class='title'>"+data[i].topic+"</div><div class='village'>"+data[i].village+"</div><div class='loc'>"+data[i].deloc+"</div></div>"+
-				   "<div class='statu'><center>"+data[i].status+"</center></div><div class='op'><button class='layui-btn layui-btn-normal'>编辑</button></div>"
+				   "<div class='statu'><center>"+data[i].status+"</center></div><div class='op'><button class='layui-btn layui-btn-normal' onclick='edit()'>编辑</button><button class='layui-btn layui-btn-danger' onclick='pullBack()'>撤回</button><button class='layui-btn' onclick='requestList("+data[i].id+")'>申请列表</button></div>"
 				
 				
 				}
@@ -54,6 +78,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 			
 	}
+	function baocun(){
+		$('.baocun').click(function(){
+			$('.head').submit();
+		});
+	}
+	function changeHeadIcon(){
+		$('.profile').html("<form action='<%= path%>/user/headiconupload' class='head' enctype='multipart/form-data' method='post'><div id='addCommodityIndex' style='margin-left:200px;margin-top:100px'>\
+           	<div class='input-group row'>\
+                <div class='col-sm-3'>\
+                    <label></label>\
+                </div>\
+                <div class='col-sm-9 big-photo'>\
+                	<div id='preview'>\
+                        <img id='imghead' border='0' src='../images/photo_icon.png' width='90' height='90' onclick=\"$('#previewImg').click();\">\
+                     </div><input type='file' name='upload' accept='image/gif,image/jpeg,image/jpg,image/png,image/svg' onchange='previewImage(this)' style='display: none;' id='previewImg'>  </div>\
+            </div>\
+            <center><a class='baocun' href='javascript:void(0);'><button>保存</button></a></center>\
+</div></form>");
+	
+	}
+
+		
+	
+
 </script>
 </head>
 <body>
@@ -72,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div class="headerSub-mod">
   <div class="headerSub clearfix">
-    <img src="../images/${sessionScope.user.headicon}" class="user-photo" alt="用户头像">
+    <img src="../images/${user.headicon}" class="user-photo" alt="用户头像">
     <div class="user-info">
       <div class="info-sup clearfix">
         <span class="hello">
@@ -135,7 +183,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<a href="<%=path %>/user/showuserinfo" class="cur"><i class="iconfont"></i>个人资料</a>
 		</li>
 		<li>
-			<a href="javascript:void(0); id="sojcode" class="" onclick=""><i class="iconfont"></i>更换头像</a>
+			<a href="javascript:void(0); id="sojcode" class="" onclick="changeHeadIcon()"><i class="iconfont"></i>更换头像</a>
 		</li>
 	</ul>
 
@@ -155,38 +203,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <i class="iconfont"></i>
     <span>基本账号资料</span>
   </div>
+  <form action="<%= path%>/user/updateuserinfo" method="post">
   <ul class="profile-list">
     <li class="photo">
       <span class="key">头像</span>
-            <img src="../images/${sessionScope.user.headicon}" alt="你的头像">
-      <a href="https://user.anjuke.com/user/modifyPhoto" class="operate-btn">修改</a>
+            <img src="../images/${user.headicon }" alt="你的头像">
+     
     </li>
     <li class="account">
       <span class="key">帐号</span>
-      <input name="user.username" class="value" type="text" value="${sessionScope.user.username}" />
+      <input type="hidden" name="user.id" value="${user.id}"/>
+      <input type="hidden" name="user.headicon" value="${user.headicon}"/>
+      <input name="user.username" class="value" type="text" readonly="true" value="${user.username}" />
     </li>
     <li class="name">
       <span class="key">昵称</span>
      
-      <input name="user.nickname" class="value" type="text" value="${sessionScope.user.nickname}" />
+      <input name="user.nickname" class="value" type="text" value="${user.nickname}" />
       
     </li>
     <li class="email">
       <span class="key">邮箱</span>
-      <input name="user.email" class="value" type="text" value="${sessionScope.user.email}" />
+      <input name="user.email" class="value" type="text" value="${user.email}" />
       
     </li>
     <li class="phone">
       <span class="key">手机</span>
-     <input name="user.phone" class="value" type="text" value="${sessionScope.user.phone}" />
+     <input name="user.phone" class="value" type="text" value="${user.phone}" />
     </li>
     <li class="password">
       <span class="key">密码</span>
-      <input class="value" type="text" value="${sessionScope.user.password}" />
+      <input name="user.password" class="value" type="text" value="${user.password}" />
     </li>
   </ul>
   <hr>
-   <center><a class="baocun" href="javascript:void(0);"><button>保存</button></a></center>
+   <center><a class="baocun" href="javascript:void(0);" ><button>保存</button></a></center>
+   </form>
 </div>
 
 <!-- 绑定提示框 -->
@@ -246,14 +298,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <button class="sure">确定</button><button class="cancel">取消</button>
 </div>
 </div>
-<script type="text/javascript" src="./用户中心－个人资料_files/jquery-underscore.min.js"></script>
-<script type="text/javascript" src="./用户中心－个人资料_files/bbv10.js.下载"></script>
-<script type="text/javascript" src="./用户中心－个人资料_files/Member_Web_User_Profile.js"></script>
-<script type="text/javascript">
 
-var tip = +"0";
-var flag = tip == 1 ? true : false;
-new ajk.UserCenter.Prorile(flag);
-</script>
+
 
 </body></html>
